@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "id": "fd3e548b-55fa-4087-86db-340e96ab9ff6",
+      "name": "Test1",
+      "type": "SampleData",
+      "properties": {
+        "type": "Bicycles"
+      }
+    }
+  ],
+  "destinations": [],
+  "streams": [
+    {
+      "id": "882a91fd-3f88-4a6a-a99d-acadf82b646d",
+      "name": "EventstreamTemplateAPI-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "Test1"
+        }
+      ]
+    }
+  ],
+  "operators": [],
+  "compatibilityLevel": "1.0"
+}
