@@ -1,0 +1,15 @@
+[
+  {
+    "name": "raw_fabric-test",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/raw_fabric-test",
+        "itemId": "64def145-94d1-94c3-4b45-f21270f271b1",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "KustoDatabase"
+      }
+    }
+  }
+]

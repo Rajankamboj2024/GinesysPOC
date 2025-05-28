@@ -1,0 +1,120 @@
+table DimDate
+	lineageTag: 34ac554e-f4eb-4304-ad2d-6e3017762174
+	sourceLineageTag: [dbo].[DimDate]
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: 4f922f89-3882-4a43-968f-9730192f7174
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: be945b3d-072b-454b-b245-ffc86f2b010d
+		sourceLineageTag: Year
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6e696aca-5aca-4de8-8fb5-fcb12fe65895
+		sourceLineageTag: Month
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c5c9000e-0f91-42c2-8639-c81006f59083
+		sourceLineageTag: Day
+		summarizeBy: none
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a2d78d42-49aa-419f-acdd-af6ce1898e15
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: abc0e580-cd45-4a36-95e9-5e543ce8345a
+		sourceLineageTag: MonthName
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayofWeek
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f147089d-70e5-49da-b79a-becd058eb0bb
+		sourceLineageTag: DayofWeek
+		summarizeBy: none
+		sourceColumn: DayofWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekdayName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 85a1178d-8736-454d-9acc-f1be9cbc2b4d
+		sourceLineageTag: WeekdayName
+		summarizeBy: none
+		sourceColumn: WeekdayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 52d8ddb9-db8a-45ca-81e8-79624f8db368
+		sourceLineageTag: MonthYear
+		summarizeBy: none
+		sourceColumn: MonthYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearInt
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 18df771f-9246-4b89-b21e-5aa76e457935
+		sourceLineageTag: MonthYearInt
+		summarizeBy: none
+		sourceColumn: MonthYearInt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = entity
+		mode: directLake
+		source
+			entityName: DimDate
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

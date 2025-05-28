@@ -1,0 +1,115 @@
+table vwSTOCKBOOKAGG1
+	lineageTag: 9a542c47-acf6-4127-b9dc-d832e38fd3ce
+	sourceLineageTag: [dbo].[vw_STOCKBOOKAGG1]
+
+	column SITE_CODE
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: ce4e4238-2c85-403c-b810-225fbc9b1b4c
+		sourceLineageTag: SITE_CODE
+		summarizeBy: none
+		sourceColumn: SITE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ITEM_CODE
+		dataType: string
+		sourceProviderType: varchar(36)
+		lineageTag: 53de6290-4b34-43b1-807b-6fdae8c59279
+		sourceLineageTag: ITEM_CODE
+		summarizeBy: none
+		sourceColumn: ITEM_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ENTRY_DATE
+		dataType: dateTime
+		formatString: dd-mm-yyyy
+		sourceProviderType: date
+		lineageTag: 192ab757-a29d-4073-88dc-1e7797e015af
+		sourceLineageTag: ENTRY_DATE
+		summarizeBy: none
+		sourceColumn: ENTRY_DATE
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column OPENING_STOCK
+		dataType: double
+		formatString: #,0
+		sourceProviderType: decimal(38, 3)
+		lineageTag: bc77417d-98c8-4924-90c7-fded5047bded
+		sourceLineageTag: OPENING_STOCK
+		summarizeBy: sum
+		sourceColumn: OPENING_STOCK
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column INWARD_STOCK
+		dataType: double
+		formatString: #,0
+		sourceProviderType: decimal(30, 3)
+		lineageTag: 43169818-7875-46e4-96fe-8d81fde73d09
+		sourceLineageTag: INWARD_STOCK
+		summarizeBy: sum
+		sourceColumn: INWARD_STOCK
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column OUTWARD_STOCK
+		dataType: double
+		formatString: #,0
+		sourceProviderType: decimal(30, 3)
+		lineageTag: f25a5f13-dcfb-43a4-97d1-8956e4de4ab1
+		sourceLineageTag: OUTWARD_STOCK
+		summarizeBy: sum
+		sourceColumn: OUTWARD_STOCK
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column CLOSING_STOCK
+		dataType: double
+		formatString: #,0
+		sourceProviderType: decimal(38, 3)
+		lineageTag: 52b9ca12-f7a4-4b3d-9818-6c958e5f2006
+		sourceLineageTag: CLOSING_STOCK
+		summarizeBy: sum
+		sourceColumn: CLOSING_STOCK
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	partition vwSTOCKBOOKAGG1 = entity
+		mode: directLake
+		source
+			entityName: vw_STOCKBOOKAGG1
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

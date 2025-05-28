@@ -1,0 +1,158 @@
+table vwITEM
+	lineageTag: 3ddacc6e-722a-4b9e-ab7d-51b251900730
+	sourceLineageTag: [dbo].[vwITEM]
+
+	column ICODE
+		dataType: string
+		sourceProviderType: varchar(36)
+		lineageTag: 92a02cea-71e2-4a50-894f-11d21520acaf
+		sourceLineageTag: ICODE
+		summarizeBy: none
+		sourceColumn: ICODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIVISION
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 5c792f42-41e6-442f-82ae-f57382a72002
+		sourceLineageTag: DIVISION
+		summarizeBy: none
+		sourceColumn: DIVISION
+
+		annotation SummarizationSetBy = Automatic
+
+	column SECTION
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 481c31a1-034c-49c2-b334-efaf54c3e593
+		sourceLineageTag: SECTION
+		summarizeBy: none
+		sourceColumn: SECTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPARTMENT
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 8b439a6d-0bda-41b3-bea3-0834705a16f6
+		sourceLineageTag: DEPARTMENT
+		summarizeBy: none
+		sourceColumn: DEPARTMENT
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY1
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: ce968bde-c857-4142-be14-fb08422f9d7a
+		sourceLineageTag: CATEGORY1
+		summarizeBy: none
+		sourceColumn: CATEGORY1
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY2
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: b6f2cbf0-e35a-43ee-83a2-382b31f8963e
+		sourceLineageTag: CATEGORY2
+		summarizeBy: none
+		sourceColumn: CATEGORY2
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY3
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 4f90a556-5fd5-463c-bb52-08cd8931971d
+		sourceLineageTag: CATEGORY3
+		summarizeBy: none
+		sourceColumn: CATEGORY3
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY4
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: ba1a1e7f-e771-48e6-945a-1023c1b41c7e
+		sourceLineageTag: CATEGORY4
+		summarizeBy: none
+		sourceColumn: CATEGORY4
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY5
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 285179f2-9e9a-418b-8aa7-9cc86d92989f
+		sourceLineageTag: CATEGORY5
+		summarizeBy: none
+		sourceColumn: CATEGORY5
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY6
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 37f24ecd-e08f-4762-a6f8-996f3bdc332d
+		sourceLineageTag: CATEGORY6
+		summarizeBy: none
+		sourceColumn: CATEGORY6
+
+		annotation SummarizationSetBy = Automatic
+
+	column MRP
+		dataType: double
+		sourceProviderType: decimal(20, 3)
+		lineageTag: 2ced60d2-266a-4f4d-8e1b-571349007593
+		sourceLineageTag: MRP
+		summarizeBy: none
+		sourceColumn: MRP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RSP
+		dataType: double
+		sourceProviderType: decimal(20, 3)
+		lineageTag: d89c6285-22f1-4b8b-a32b-5d1079bfe38f
+		sourceLineageTag: RSP
+		summarizeBy: none
+		sourceColumn: RSP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column invarticle_code
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4a490d6e-13eb-47b8-af94-e11a8dc70e9d
+		sourceLineageTag: invarticle_code
+		summarizeBy: none
+		sourceColumn: invarticle_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ARTICLE
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: a6912527-5bcd-4806-bf99-59248a962d23
+		sourceLineageTag: ARTICLE
+		summarizeBy: none
+		sourceColumn: ARTICLE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vwITEM = entity
+		mode: directLake
+		source
+			entityName: vwITEM
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

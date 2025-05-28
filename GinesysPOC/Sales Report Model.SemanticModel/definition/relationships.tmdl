@@ -1,0 +1,12 @@
+relationship cb41af2b-ce8c-faba-1f6f-644c2890c81e
+	fromColumn: vwpsite_posbillitem.icode
+	toColumn: vwITEM.ICODE
+
+relationship e51d88b8-f09d-a3bb-2a03-97e466a093c0
+	fromColumn: vwpsite_posbillitem.admsite_code
+	toColumn: vwSITE.CODE
+
+relationship a783b179-fde5-3497-bc66-13b27a623786
+	fromColumn: vwpsite_posbillitem.ref_billdate_cast
+	toColumn: DimDate.Date
+

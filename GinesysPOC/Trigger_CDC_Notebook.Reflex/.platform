@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Reflex",
+    "displayName": "Trigger_CDC_Notebook"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "97327a33-d1c9-bbeb-486b-a3f3ab46c550"
+  }
+}

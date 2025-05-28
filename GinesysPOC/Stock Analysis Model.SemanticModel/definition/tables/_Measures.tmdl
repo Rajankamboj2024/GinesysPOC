@@ -1,0 +1,91 @@
+table _Measures
+	lineageTag: c41bedd4-bc69-4c0c-b442-e39f2f7ed910
+
+	measure 'Closing Stock' = ```
+			
+			
+			VAR LatestDate =
+			 CALCULATE( MAX( vwSTOCKBOOKAGG1[ENTRY_DATE]), not(isblank(vwSTOCKBOOKAGG1[CLOSING_STOCK])) )
+			
+			VAR r= CALCULATE(SUM(vwSTOCKBOOKAGG1[CLOSING_STOCK]) , All(DimDate), DimDate[Date]=LatestDate)
+			RETURN r
+			
+			
+			```
+		lineageTag: 3858b19a-4c15-470d-aa25-ab256d2498f7
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inward Stock' = ```
+			
+			
+			VAR result = 
+			    SUM(vwSTOCKBOOKAGG1[INWARD_STOCK])
+			
+			
+			RETURN  IF(ISBLANK(result), 0, result)
+			```
+		lineageTag: 7711e962-5dab-4719-80ed-11add731a41d
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Opening Stock' = ```
+			
+			VAR LeastDate =
+			CALCULATE( MIN( vwSTOCKBOOKAGG1[ENTRY_DATE]), not(isblank(vwSTOCKBOOKAGG1[OPENING_STOCK])) )
+			
+			VAR r= CALCULATE(SUM(vwSTOCKBOOKAGG1[OPENING_STOCK]) , All(DimDate), DimDate[Date]=LeastDate)
+			RETURN r
+			
+			
+			 
+			```
+		lineageTag: 0b8214ec-e014-4f53-a856-a19c2a2d4b03
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outward Stock' =
+			
+			VAR result =
+			    SUM(vwSTOCKBOOKAGG1[OUTWARD_STOCK])
+			
+			
+			RETURN IF(ISBLANK(result), 0, result)
+		lineageTag: 699d64ec-b1cd-476e-87e0-f921551d809f
+
+		changedProperty = Name
+
+		changedProperty = DisplayFolder
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: de6169c1-cae9-4cf8-aa50-2219b878e604
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 47991c0bafde45d7b0df82653f0ce387
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

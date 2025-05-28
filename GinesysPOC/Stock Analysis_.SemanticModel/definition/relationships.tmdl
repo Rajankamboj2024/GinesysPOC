@@ -1,0 +1,12 @@
+relationship 5b923793-29da-315b-0a05-3ff8b2cb5a58
+	fromColumn: vwSTOCKBOOKAGG1.ENTRY_DATE
+	toColumn: DimDate.Date
+
+relationship 182e2a96-c7e6-a8a2-bf33-62bf4d7b6f31
+	fromColumn: vwSTOCKBOOKAGG1.SITE_CODE
+	toColumn: vwSITE.CODE
+
+relationship c9137695-56ca-0552-d812-27b2c7299efd
+	fromColumn: vwSTOCKBOOKAGG1.ITEM_CODE
+	toColumn: vwITEM.ICODE
+

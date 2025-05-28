@@ -1,0 +1,96 @@
+table vwSITE
+	lineageTag: 977aefb1-37fc-4651-bde3-090001dbe5be
+	sourceLineageTag: [dbo].[vw_SITE]
+
+	column CODE
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8bf4c10d-00e2-4545-82a6-49cfe4805fff
+		sourceLineageTag: CODE
+		summarizeBy: none
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column LONG_NAME
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 5e6a9682-cf1c-4091-8cfa-e7fd11ef5269
+		sourceLineageTag: LONG_NAME
+		summarizeBy: none
+		sourceColumn: LONG_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SHORT_NAME
+		dataType: string
+		sourceProviderType: varchar(100)
+		lineageTag: def67ee7-d3bb-489f-8ea9-52f9e2fe6d7c
+		sourceLineageTag: SHORT_NAME
+		summarizeBy: none
+		sourceColumn: SHORT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_TYPE
+		dataType: string
+		sourceProviderType: varchar(60)
+		lineageTag: a855038e-1c2c-4a15-8bf8-0fc811a667bd
+		sourceLineageTag: SITE_TYPE
+		summarizeBy: none
+		sourceColumn: SITE_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CITY
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 5f67ab15-924e-45cf-aaa7-2117ad2afacf
+		sourceLineageTag: CITY
+		summarizeBy: none
+		sourceColumn: CITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATE
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 0ffb3159-8c24-4600-9fa7-e58f8c5c1110
+		sourceLineageTag: STATE
+		summarizeBy: none
+		sourceColumn: STATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUNTRY
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 5b5cb741-72c0-4e8b-8743-630b150fcc5c
+		sourceLineageTag: COUNTRY
+		summarizeBy: none
+		sourceColumn: COUNTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZONE
+		dataType: string
+		sourceProviderType: varchar(400)
+		lineageTag: 63285c3b-a059-4e86-867f-81d851e368fb
+		sourceLineageTag: ZONE
+		summarizeBy: none
+		sourceColumn: ZONE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vwSITE = entity
+		mode: directLake
+		source
+			entityName: vw_SITE
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

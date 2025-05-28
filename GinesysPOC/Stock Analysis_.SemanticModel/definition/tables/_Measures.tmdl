@@ -1,0 +1,74 @@
+table _Measures
+	lineageTag: 36e10d7c-955a-4a2d-805f-920b41fb1d2e
+
+	measure 'Closing Stock' = ```
+			
+			
+			VAR LatestDate =
+			 CALCULATE( MAX( vwSTOCKBOOKAGG1[ENTRY_DATE]), not(isblank(vwSTOCKBOOKAGG1[CLOSING_STOCK])) )
+			
+			VAR r= CALCULATE(SUM(vwSTOCKBOOKAGG1[CLOSING_STOCK]) , All(DimDate), DimDate[Date]=LatestDate)
+			RETURN r
+			
+			
+			```
+		lineageTag: ae7a1fe9-ffe1-4ab5-a408-8fb25a7749d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inward Stock' = ```
+			
+			
+			VAR result = 
+			    SUM(vwSTOCKBOOKAGG1[INWARD_STOCK])
+			
+			
+			RETURN  IF(ISBLANK(result), 0, result)
+			```
+		lineageTag: 921f2f2b-6530-4df1-8507-66916d2d7c82
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Opening Stock' = ```
+			
+			VAR LeastDate =
+			CALCULATE( MIN( vwSTOCKBOOKAGG1[ENTRY_DATE]), not(isblank(vwSTOCKBOOKAGG1[OPENING_STOCK])) )
+			
+			VAR r= CALCULATE(SUM(vwSTOCKBOOKAGG1[OPENING_STOCK]) , All(DimDate), DimDate[Date]=LeastDate)
+			RETURN r
+			
+			
+			 
+			```
+		lineageTag: b6b01390-3c7f-49ba-8e38-7124232150e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outward Stock' =
+			
+			VAR result =
+			    SUM(vwSTOCKBOOKAGG1[OUTWARD_STOCK])
+			
+			
+			RETURN IF(ISBLANK(result), 0, result)
+		lineageTag: 034a4237-e96b-4d45-8b33-0c4770c5a72a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 9157e56a-1f6d-464b-a6cd-b948108d72fe
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 3e580c3cf18447309c90dcc1d1c6cd25
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

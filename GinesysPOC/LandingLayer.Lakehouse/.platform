@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "LandingLayer",
+    "description": "Lakehouse for LandingLayer"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b37ea3dc-1a20-a6ce-40df-eefcdd94153f"
+  }
+}

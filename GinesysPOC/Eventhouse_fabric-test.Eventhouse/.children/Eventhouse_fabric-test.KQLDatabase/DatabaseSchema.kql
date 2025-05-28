@@ -1,0 +1,8 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table ['raw_fabric-test'] (ingestion_datetime:datetime, payload:dynamic, schema:dynamic) 
+.create-or-alter materialized-view  ingestion_summary_mv on table raw_fabric-test { ['raw_fabric-test']
+    | summarize MaxIngestionTime = max(ingestion_time()) 
+    by ConstantGroup = 1 }

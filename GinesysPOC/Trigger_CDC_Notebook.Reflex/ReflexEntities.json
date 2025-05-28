@@ -1,0 +1,51 @@
+[
+  {
+    "uniqueIdentifier": "4e84fd22-8411-4bad-b1c3-cf737212cc5f",
+    "payload": {
+      "name": "EventStream",
+      "metadata": {
+        "eventstreamArtifactId": "2c1c4f42-55d2-44fa-bdf9-fbf032637984"
+      }
+    },
+    "type": "eventstreamSource-v1"
+  },
+  {
+    "uniqueIdentifier": "f8737be5-dd0d-4834-98bb-8fd50e3ff9f7",
+    "payload": {
+      "name": "EvenntStream_fabric-test-stream event",
+      "definition": {
+        "type": "Event",
+        "instance": "{\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.1\",\"steps\":[{\"name\":\"SourceEventStep\",\"id\":\"1d8b1f2a-23e3-4a75-bf22-aef15b97f8bf\",\"rows\":[{\"name\":\"SourceSelector\",\"kind\":\"SourceReference\",\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"4e84fd22-8411-4bad-b1c3-cf737212cc5f\"}]}]}]}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "79aa6dd6-0e38-4e15-9845-72a966caa2b5",
+    "payload": {
+      "name": "EvenntStream_fabric-test-stream event alert",
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"steps\":[{\"id\":\"8bf0bb7a-715e-4699-a9ad-8905bf627d47\",\"name\":\"FieldsDefaultsStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"f8737be5-dd0d-4834-98bb-8fd50e3ff9f7\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"}]},{\"id\":\"e886cf21-0a7e-43af-80b3-01dcb1f1da23\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[],\"kind\":\"OnEveryValue\",\"name\":\"OnEveryValue\"}]},{\"id\":\"e7eb5fb3-69ce-4f6c-adc2-eff749b4996c\",\"name\":\"ActStep\",\"rows\":[{\"arguments\":[{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"fabricJobConnectionDocumentId\",\"type\":\"string\",\"value\":\"c5ccd66b-a109-4802-9cfe-b44b67611c25\"},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[]},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"workspaceId\",\"type\":\"string\",\"value\":\"c5672fc9-2a13-4083-9a9e-caa93efa804f\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"itemId\",\"type\":\"string\",\"value\":\"d5d1adbc-1790-4e6a-b5d1-c3ec9af6478d\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"itemType\",\"type\":\"string\",\"value\":\"SynapseNotebook\"},{\"__typename\":\"templateInstanceV2StringArg\",\"name\":\"jobType\",\"type\":\"string\",\"value\":\"RunNotebook\"}],\"kind\":\"FabricItemInvocation\",\"name\":\"FabricItemBinding\"}]}],\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.1.1\"}",
+        "settings": {
+          "shouldRun": true,
+          "shouldApplyRuleOnUpdate": true
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "c5ccd66b-a109-4802-9cfe-b44b67611c25",
+    "payload": {
+      "name": "Fabric item action",
+      "fabricItem": {
+        "itemId": "9af6478d-c3ec-b5d1-4e6a-1790d5d1adbc",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemType": "SynapseNotebook"
+      },
+      "jobType": "RunNotebook"
+    },
+    "type": "fabricItemAction-v1"
+  }
+]

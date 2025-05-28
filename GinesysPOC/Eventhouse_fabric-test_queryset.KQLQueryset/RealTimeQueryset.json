@@ -1,0 +1,46 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34",
+        "clusterUri": "",
+        "type": "Fabric",
+        "databaseItemId": "64def145-94d1-94c3-4b45-f21270f271b1",
+        "databaseItemName": "Eventhouse_fabric-test"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "657f09cc-2970-4108-9a99-72709af9f2a8",
+        "content": "select top 100 * from [raw_fabric-test]\n where payload like '%invstock%'\n\n\nselect top 100 * from [raw_fabric-test]\n where payload like '%psite_posbillitem%'\n\n\n\nselect top 10 * from [raw_fabric-test]\n where payload like '%psite_posbill_,%'\n\n select top 100 * from [raw_fabric-test]\n where payload like '%admsite%' and ingestion_datetime >= '2025-04-16'\n Order by ingestion_datetime DESC\n\n\n\n\n  select top 100 * from [raw_fabric-test]\n where payload like '%admsite%' \n and ingestion_datetime >= '2025-04-14'\n Order by ingestion_datetime DESC\n\n\n   select top 100 * from [raw_fabric-test]\n where payload like '%admcity%' \n and ingestion_datetime >= '2025-04-14'\n Order by ingestion_datetime DESC\n\n\nselect top 100 * from [raw_fabric-test]\nwhere payload like '%invstock%' \nand ingestion_datetime >= '2025-04-16'\nOrder by ingestion_datetime DESC\n\n\n\nselect top 100 * from [raw_fabric-test]\nwhere payload like '%invstock%' \nand ingestion_datetime >= '2025-04-16'\nOrder by ingestion_datetime DESC\n\n\n\n[raw_fabric-test]\n| extend IngestionTime = ingestion_time()  // Assuming IngestionTime is added in your dataset\n| summarize IngestionTimeDifference = datetime_diff('minute', IngestionTime, ingestion_time())\n\n\n\n\n\n\n\n\n ",
+        "title": "",
+        "dataSourceId": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34"
+      },
+      {
+        "id": "c8c7b9c4-4131-4b13-81d1-89caaa418df2",
+        "content": "// View a representation of the schema as a table with column names, column type, and data type.\n['raw_fabric-test']\n| getschema\n\n['raw_fabric-test']\n| summarize IngestionCount = count() by bin(ingestion_time(), 5h)\n\n['raw_fabric-test']\n| where ingestion_time() > ago(2h)\n| summarize IngestionCount = count()\n\n\n\n// See the most recent data - records ingested in the last 24 hours.\n['raw_fabric-test']\n| where ingestion_time() between (now(-1d) .. now())\n\n---------------- MIn and Max\n['raw_fabric-test']\n| where ingestion_time() > ago(24h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_time()), \n    MaxIngestionTime = max(ingestion_time())\n\n\n\n-------- 1.1 M Eventstream\n    ['raw_fabric-test']\n| where ingestion_time() > ago(24h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_time()), \n    MaxIngestionTime = max(ingestion_time()),\n    TimeDifference = max(ingestion_time()) - min(ingestion_time())\n\n\n-------- 1.1 M Eventstream\n\n['raw_fabric-test']\n| where ingestion_datetime > ago(34h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_datetime), \n    MaxIngestionTime = max(ingestion_datetime),\n    TimeDifference = max(ingestion_datetime) - min(ingestion_datetime)\n\n\n['raw_fabric-test']\n| summarize IngestionCount = count() by bin(ingestion_time(), 2h)\n\nselect Min(ingestion_datetime) as Min, Max(ingestion_datetime) as Max from [raw_fabric-test]\n\n.alter-merge table ['raw_fabric-test'] policy mirroring dataformat=parquet with (IsEnabled=true, TargetLatencyInMinutes=5);\n\n .show table ['raw_fabric-test'] operations mirroring-status",
+        "title": "",
+        "dataSourceId": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34"
+      },
+      {
+        "id": "591be4f9-0c3d-4ec0-a92b-b1b34a3b0b04",
+        "content": "Update admsite\nset ctname = 'test_updated'\nwhere ctname like '%KOLKATA%'\n\n\n.create materialized-view ingestion_summary_mv on table ['raw_fabric-test'] \n{\n    ['raw_fabric-test']\n    | summarize MaxIngestionTime = max(ingestion_time()) by IngestionHour = bin(ingestion_time(), 1h)\n}\n\n.alter materialized-view ingestion_summary_mv on table ['raw_fabric-test']\n{\n    ['raw_fabric-test']\n    | summarize MaxIngestionTime = max(ingestion_time()) \n    by ConstantGroup = 1\n}\n\n.drop materialized-view ingestion_summary_mv ifexists\n\n.create materialized-view ingestion_summary_mv on table ['raw_fabric-test']\n{\n    ['raw_fabric-test']\n    | summarize MaxIngestionTime = max(ingestion_time()) \n    by ConstantGroup = 1\n}\n\n\n\n.show materialized-views\n\n-------- 1.1 M Eventstream\n\n\n['raw_fabric-test']\n| where ingestion_datetime > ago(24h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_datetime), \n    MaxIngestionTime = max(ingestion_datetime),\n    TimeDifference = max(ingestion_datetime) - min(ingestion_datetime)\n",
+        "title": "",
+        "dataSourceId": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34"
+      },
+      {
+        "id": "bec7f1cd-f73c-4846-8777-382583b1a8b3",
+        "content": "['raw_fabric-test']\n| where ingestion_time() between (datetime(2025-04-17 00:30:00) .. datetime(2025-04-17 01:00:00))\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_time()), \n    MaxIngestionTime = max(ingestion_time()), \n    TimeDifference = max(ingestion_time()) - min(ingestion_time())\n\n-- View a sample of 100 records in the table.\nselect count(1) from \"raw_fabric-test\"\nwhere ingestion_datetime  between  '2025-04-17 09:00:00' AND '2025-04-17 10:30:00'\n\n\nselect count(1) from \"raw_fabric-test\"\nwhere ingestion_datetime  between  '2025-04-17 09:00:00' AND '2025-04-17 10:30:00'\n\n\n\n\n-- View a sample of 100 records in the table.\nselect count(1) from \"raw_fabric-test\"\nwhere ingestion_datetime  between  '2025-04-17 09:00:00' AND '2025-04-17 23:59:00'\n\n\nselect DISTINCT   ingestion_datetime from \"raw_fabric-test\"\nwhere ingestion_datetime between  '2025-04-17 09:00:00' AND '2025-04-17 23:59:00'\nORDER BY ingestion_datetime DESC\n\n['raw_fabric-test']\n| where ingestion_time() > ago(1h)\n| summarize IngestionCount = count()\n\n\n\n\n//-------- KQL Datetime\n    ['raw_fabric-test']\n| where ingestion_time() > ago(7h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_time()), \n    MaxIngestionTime = max(ingestion_time()),\n    TimeDifference = max(ingestion_time()) - min(ingestion_time())\n",
+        "title": "",
+        "dataSourceId": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34"
+      },
+      {
+        "id": "471f2571-0e65-44b0-9877-6629a47faee6",
+        "content": "//-------- Custom Datatime\n['raw_fabric-test']\n| where ingestion_datetime > ago(7h)\n| summarize \n    IngestionCount = count(), \n    MinIngestionTime = min(ingestion_datetime), \n    MaxIngestionTime = max(ingestion_datetime),\n    TimeDifference = max(ingestion_datetime) - min(ingestion_datetime)\n\n",
+        "title": "",
+        "dataSourceId": "dd85a4ab-0a2a-4cb9-8d08-d3a860f7ef34"
+      }
+    ]
+  }
+}
