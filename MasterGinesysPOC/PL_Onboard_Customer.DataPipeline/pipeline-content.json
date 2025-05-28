@@ -1,0 +1,201 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "ExcelSource",
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            }
+          },
+          "datasetSettings": {
+            "type": "Excel",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "folderPath": "Config",
+                "fileName": "MasterConfigurations.xlsx"
+              },
+              "sheetName": "onboarding",
+              "firstRowAsHeader": true
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "OnBoardingLakehouse",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "c239ed52-934f-ab59-4ced-9e5596a72669",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000",
+                  "rootFolder": "Files"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Master Configurations",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": true,
+          "items": {
+            "value": "@activity('Get New Customer').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "7e1c9a39-53b2-93e6-4c51-2ff403577edb",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "customerworkspace": {
+                    "value": {
+                      "value": "@item().CustomerName",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "capacityid": {
+                    "value": {
+                      "value": "@item().CapacityId",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Create Customer Workspace",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "ee78060d-bf30-854d-4c58-d532c9ce426c",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "customerworkspace": {
+                    "value": {
+                      "value": "@item().CustomerName",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Create Artifacts in Customer Workspace",
+              "dependsOn": [
+                {
+                  "activity": "Create Customer Workspace",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "418a4c04-d5c1-9f5f-4470-6239b4d6d179",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "customerworkspace": {
+                    "value": {
+                      "value": "@item().CustomerName",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "databasename": {
+                    "value": {
+                      "value": "@item().DatabaseName",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Schema Definitions",
+              "dependsOn": [
+                {
+                  "activity": "Create Artifacts in Customer Workspace",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "For Each Customer to Onboard",
+        "dependsOn": [
+          {
+            "activity": "Get New Customer",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Filter",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Get Master Configurations').output.value",
+            "type": "Expression"
+          },
+          "condition": {
+            "value": "@equals(item().OnboardingStatus, 'new')",
+            "type": "Expression"
+          }
+        },
+        "name": "Get New Customer",
+        "dependsOn": [
+          {
+            "activity": "Get Master Configurations",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
